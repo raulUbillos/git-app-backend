@@ -1,10 +1,10 @@
 import { Controller, Get, Param, Post, Body } from '@nestjs/common';
 
-@Controller()
-export class HistoryController {
+@Controller('/git/commits/')
+export class CommitsController {
   @Get()
   commitHistory(): string {
-    return 'asd';
+    return 'Commit List';
   }
 
   @Get(':commit')
