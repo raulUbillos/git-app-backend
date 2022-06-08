@@ -10,7 +10,6 @@ export class CommitsService {
   }
 
   commit(commit: string) {
-    console.log(commit);
     return this.apiService.gitCommit(commit);
   }
 
