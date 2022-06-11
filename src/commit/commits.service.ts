@@ -1,12 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { ApiService } from 'src/api-lib/api.service';
+import { ApiService } from '../api-lib/api.service';
+import { ICommitResponse } from './models/ICommitResponse';
+import { mapIGitCommitResponseToICommitResponse } from '../utils/mappers';
 
 @Injectable()
 export class CommitsService {
   constructor(private apiService: ApiService) {}
 
-  commitHistory() {
-    return this.apiService.gitCommitHistory();
+  async commitHistory(
+    owner: string,
+    repo: string,
+    branch: string,
+  ): Promise<ICommitResponse[]> {
+    const responses = await this.apiService.gitCommitHistory(
+      owner,
+      repo,
+      branch,
+    );
+    return responses.map<ICommitResponse>((response) => {
+      return mapIGitCommitResponseToICommitResponse(response);
+    });
   }
 
   commit(commit: string) {
