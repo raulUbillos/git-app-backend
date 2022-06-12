@@ -21,11 +21,20 @@ export class ApiService {
     return response.data;
   }
 
-  gitCommit(shaCommit: string): string {
-    return (
-      process.env.GITHUBAPIHOST +
-      'raulubillos-santex/pokemon-api/commits/' +
-      shaCommit
+  async gitCommit(
+    owner: string,
+    repo: string,
+    branch?: string,
+    shaCommit?: string,
+  ): Promise<IGitCommitResponses> {
+    const GITHUB_COMMIT_HISTORY = `${
+      process.env.GITHUBAPIHOST
+    }repos/${owner}/${repo}/commits${shaCommit ? `/${shaCommit}` : ''}${
+      branch ? `?sha=${branch}` : ''
+    }`;
+    const response = await lastValueFrom(
+      this.httpService.get<IGitCommitResponses>(GITHUB_COMMIT_HISTORY),
     );
+    return response.data;
   }
 }

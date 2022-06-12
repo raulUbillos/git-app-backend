@@ -22,11 +22,18 @@ export class CommitsService {
     });
   }
 
-  commit(commit: string) {
-    return this.apiService.gitCommit(commit);
-  }
-
-  commitByDateRange(dateRange: Record<string, string>) {
-    return dateRange;
+  async commit(
+    owner: string,
+    repo: string,
+    branch: string,
+    commit: string,
+  ): Promise<ICommitResponse> {
+    const response = await this.apiService.gitCommit(
+      owner,
+      repo,
+      branch,
+      commit,
+    );
+    return mapIGitCommitResponseToICommitResponse(response);
   }
 }
