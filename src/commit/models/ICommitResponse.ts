@@ -1,14 +1,27 @@
 export interface ICommitResponse {
   code: string;
+  dateAuthored: string;
+  dateCommited: string;
   author: {
+    login?: string;
+    id?: number;
+    avatarUrl?: string;
     name: string;
     email: string;
-    date: string;
   };
-  commiter: {
+  committer: {
+    login?: string;
+    id?: number;
+    avatarUrl?: string;
     name: string;
     email: string;
-    date: string;
   };
+  files?: {
+    filename: string;
+    status: string;
+    additions: number;
+    deletions: number;
+    changes: number;
+  }[];
   message: string;
 }

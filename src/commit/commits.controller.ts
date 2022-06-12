@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Post, Param, Body } from '@nestjs/common';
+import { Controller, Get, Query, Param } from '@nestjs/common';
 import { ICommitResponse } from './models/ICommitResponse';
 import { CommitsService } from './commits.service';
 
@@ -16,14 +16,12 @@ export class CommitsController {
   }
 
   @Get(':commit')
-  commit(@Param('commit') commit: string): string {
-    return this.commitsService.commit(commit);
-  }
-
-  @Post()
-  commitByDateRange(
-    @Body() dateRange: Record<string, string>,
-  ): Record<string, string> {
-    return this.commitByDateRange(dateRange);
+  async commit(
+    @Param('commit') commit: string,
+    @Query('owner') owner: string,
+    @Query('repository') repository: string,
+    @Query('branch') branch: string,
+  ): Promise<ICommitResponse> {
+    return await this.commitsService.commit(owner, repository, branch, commit);
   }
 }
