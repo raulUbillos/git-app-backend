@@ -27,8 +27,8 @@ export class CommitsService {
       const axiosError = err as AxiosError<IErrorResponse>;
       throw new HttpException(
         {
-          status: axiosError.response.status,
-          error: axiosError.response.data.message,
+          status: axiosError.response?.status,
+          error: axiosError.response?.data.message,
         },
         axiosError.response.status,
       );
